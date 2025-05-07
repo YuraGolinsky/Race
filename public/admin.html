@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Адмін-панель — Скачки</title>
+  <link rel="stylesheet" href="admin.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Навігаційне меню -->
+  <header>
+    <nav>
+      <ul>
+        <li><a href="index.html">Головна</a></li>
+        <li><a href="admin.html">Адмін-панель</a></li>
+        <li><a href="bookmaker.html">Букмекер</a></li>
+        <li><a href="bets.html">Ставки</a></li>
+        <li><a href="results.html">Результати</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Секція Адмін-панелі -->
+  <section class="admin-dashboard">
+    <h1 data-aos="fade-up">Адмін-панель</h1>
+    <p data-aos="fade-up" data-aos-delay="200">Керуйте забігами, ставками та результатами прямо з цієї панелі.</p>
+
+    <div class="admin-actions">
+      <!-- Форма додавання забігу -->
+      <div class="action-item" data-aos="fade-up" data-aos-delay="400">
+        <h3>Додати Забіг</h3>
+        <form id="add-race-form">
+          <label for="race-name">Назва Забігу</label>
+          <input type="text" id="race-name" name="race-name" required>
+          
+          <label for="race-date">Дата Забігу</label>
+          <input type="date" id="race-date" name="race-date" required>
+
+          <label for="race-location">Місце проведення</label>
+          <input type="text" id="race-location" name="race-location" required>
+
+          <button type="submit">Додати Забіг</button>
+        </form>
+      </div>
+
+      <!-- Форма редагування результатів -->
+      <div class="action-item" data-aos="fade-up" data-aos-delay="600">
+        <h3>Редагувати Результати</h3>
+        <form id="edit-results-form">
+          <label for="race-id">ID Забігу</label>
+          <input type="number" id="race-id" name="race-id" required>
+
+          <label for="race-results">Результати</label>
+          <textarea id="race-results" name="race-results" required></textarea>
+
+          <button type="submit">Оновити Результати</button>
+        </form>
+      </div>
+
+      <!-- Форма додавання учасника до забігу -->
+      <div class="action-item" data-aos="fade-up" data-aos-delay="1000">
+        <h3>Додати Учасника до Забігу</h3>
+        <form id="add-horse-form">
+          <label for="horse-name">Ім'я Учасника</label>
+          <input type="text" id="horse-name" name="horse-name" required>
+
+          <label for="race-id">ID Забігу</label>
+          <input type="number" id="horse-race-id" name="horse-race-id" required>
+
+          <button type="submit">Додати Учасника</button>
+        </form>
+      </div>
+
+      <!-- Форма видалення учасника з забігу -->
+      <div class="action-item" data-aos="fade-up" data-aos-delay="1200">
+        <h3>Видалити Учасника з Забігу</h3>
+        <form id="remove-horse-form">
+          <label for="remove-horse-id">ID Учасника</label>
+          <input type="number" id="remove-horse-id" name="remove-horse-id" required>
+
+          <button type="submit">Видалити Учасника</button>
+        </form>
+      </div>
+
+      <!-- Кнопка виходу з адмін-панелі -->
+      <div class="logout-button">
+        <button onclick="logout()">Вийти</button>
+      </div>
+    </div>
+  </section>
+
+  <footer data-aos="fade-up" data-aos-delay="1000">
+    <p>© 2025 Скачки — Онлайн Ставки на Забіги. Всі права захищені.</p>
+  </footer>
+
+  <script>
+    // Ініціалізація анімацій AOS
+    AOS.init({
+      duration: 1000,
+      easing: 'ease-in-out',
+      once: true,
+    });
+
+    // Обробка форми додавання забігу
+    document.getElementById("add-race-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const raceName = document.getElementById("race-name").value;
+      const raceDate = document.getElementById("race-date").value;
+      const raceLocation = document.getElementById("race-location").value;
+
+      alert(`Забіг "${raceName}" був доданий на ${raceDate} в ${raceLocation}.`);
+    });
+
+    // Обробка форми редагування результатів
+    document.getElementById("edit-results-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const raceId = document.getElementById("race-id").value;
+      const raceResults = document.getElementById("race-results").value;
+
+      alert(`Результати для забігу з ID ${raceId} оновлені: ${raceResults}`);
+    });
+
+    // Обробка форми додавання учасника
+    document.getElementById("add-horse-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const horseName = document.getElementById("horse-name").value;
+      const raceId = document.getElementById("horse-race-id").value;
+
+      alert(`Учасник "${horseName}" доданий до забігу з ID ${raceId}.`);
+    });
+
+    // Обробка форми видалення учасника
+    document.getElementById("remove-horse-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const horseId = document.getElementById("remove-horse-id").value;
+
+      alert(`Учасник з ID ${horseId} видалений зі списку учасників.`);
+    });
+
+    // Функція для виходу з адмін-панелі
+    function logout() {
+      // Очистка даних про користувача (наприклад, токену або сесії)
+      localStorage.removeItem('user'); // або sessionStorage, якщо використовуєш його
+      // Перенаправлення на сторінку входу
+      window.location.href = '/index.html'; // або інший шлях для сторінки входу
+    }
+  </script>
+</body>
+</html>
